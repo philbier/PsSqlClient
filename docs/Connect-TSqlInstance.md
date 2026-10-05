@@ -95,7 +95,7 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -121,7 +121,7 @@ Accept wildcard characters: False
 Type: SqlAuthenticationMethod
 Parameter Sets: (All)
 Aliases:
-Accepted values: NotSpecified, SqlPassword, ActiveDirectoryPassword, ActiveDirectoryIntegrated, ActiveDirectoryInteractive, ActiveDirectoryServicePrincipal, ActiveDirectoryDeviceCodeFlow, ActiveDirectoryManagedIdentity, ActiveDirectoryMSI, ActiveDirectoryDefault
+Accepted values: NotSpecified, SqlPassword, ActiveDirectoryPassword, ActiveDirectoryIntegrated, ActiveDirectoryInteractive, ActiveDirectoryServicePrincipal, ActiveDirectoryDeviceCodeFlow, ActiveDirectoryManagedIdentity, ActiveDirectoryMSI, ActiveDirectoryDefault, ActiveDirectoryWorkloadIdentity
 
 Required: False
 Position: Named
