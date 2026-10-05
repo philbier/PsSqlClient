@@ -9,7 +9,7 @@ namespace PsSqlClient
 
         [Parameter()]
         [ValidateNotNullOrEmpty()]
-        public SqlConnection Connection { get; set; } = ConnectInstanceCommand.SessionConnection;
+        public virtual SqlConnection Connection { get; set; } = ConnectInstanceCommand.SessionConnection;
 
         protected override void BeginProcessing()
         {

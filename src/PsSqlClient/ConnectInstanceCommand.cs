@@ -1,12 +1,14 @@
 ﻿using System;
+using Azure.Core;
+using Azure.Identity;
 using Microsoft.Data.SqlClient;
-using Microsoft.Azure.Services.AppAuthentication;
 using System.Management.Automation;
 using System.Security;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Net;
 using System.Diagnostics;
+using System.Threading;
 
 namespace PsSqlClient
 {
@@ -334,11 +336,13 @@ namespace PsSqlClient
         #region Token Parameter
         [Parameter(
             Mandatory = true,
-            ParameterSetName = PARAMETERSET_CONNECTION_STRING_TOKEN
+            ParameterSetName = PARAMETERSET_CONNECTION_STRING_TOKEN,
+            ValueFromPipelineByPropertyName = true
         )]
         [Parameter(
             Mandatory = true,
-            ParameterSetName = PARAMETERSET_PROPERTIES_BASIC_TOKEN
+            ParameterSetName = PARAMETERSET_PROPERTIES_BASIC_TOKEN,
+            ValueFromPipelineByPropertyName = true
         )]
         [ValidateNotNullOrEmpty()]
         public string AccessToken { get; set; }
@@ -406,7 +410,6 @@ namespace PsSqlClient
             base.BeginProcessing();
             WriteVerbose($"ParameterSet: {ParameterSetName}");
             LoadSqlClientDll();
-            InitAuthenticationClass();
         }
 
         private void LoadSqlClientDll()
@@ -447,7 +450,11 @@ namespace PsSqlClient
                 WriteVerbose("Token will be acquired. Use token-based authentication.");
                 _authenticationClass = AuthenticationClass.TokenAuthentication;
 
-                AccessToken = new AzureServiceTokenProvider().GetAccessTokenAsync(resource: Resource).Result;
+                var tokenScope = $"{Resource.TrimEnd('/')}/.default";
+                AccessToken = new DefaultAzureCredential().GetToken(
+                    new TokenRequestContext(new[] { tokenScope }),
+                    CancellationToken.None
+                ).Token;
                 WriteDebug($"AccessToken:${AccessToken}");
             }
             else if (!string.IsNullOrWhiteSpace(AccessToken))
@@ -472,6 +479,7 @@ namespace PsSqlClient
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
+            InitAuthenticationClass();
             ValidateAuthenticationParameter();
 
             // apply parameters
