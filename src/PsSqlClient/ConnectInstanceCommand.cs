@@ -408,6 +408,7 @@ namespace PsSqlClient
             base.BeginProcessing();
             WriteVerbose($"ParameterSet: {ParameterSetName}");
             LoadSqlClientDll();
+            InitAuthenticationClass();
         }
 
         private void LoadSqlClientDll()
@@ -477,7 +478,6 @@ namespace PsSqlClient
         protected override void ProcessRecord()
         {
             base.ProcessRecord();
-            InitAuthenticationClass();
             ValidateAuthenticationParameter();
 
             // apply parameters
