@@ -11,7 +11,7 @@ namespace PsSqlClient
             ValueFromPipeline = true
         )]
         [ValidateNotNullOrEmpty()]
-        public override SqlConnection Connection { get; set; } = ConnectInstanceCommand.SessionConnection;
+        public new SqlConnection Connection { get; set; } = ConnectInstanceCommand.SessionConnection;
 
         protected override void ProcessRecord()
         {
