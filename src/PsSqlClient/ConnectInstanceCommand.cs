@@ -336,13 +336,11 @@ namespace PsSqlClient
         #region Token Parameter
         [Parameter(
             Mandatory = true,
-            ParameterSetName = PARAMETERSET_CONNECTION_STRING_TOKEN,
-            ValueFromPipelineByPropertyName = true
+            ParameterSetName = PARAMETERSET_CONNECTION_STRING_TOKEN
         )]
         [Parameter(
             Mandatory = true,
-            ParameterSetName = PARAMETERSET_PROPERTIES_BASIC_TOKEN,
-            ValueFromPipelineByPropertyName = true
+            ParameterSetName = PARAMETERSET_PROPERTIES_BASIC_TOKEN
         )]
         [ValidateNotNullOrEmpty()]
         public string AccessToken { get; set; }
